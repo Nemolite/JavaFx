@@ -1,48 +1,57 @@
 import java.io.*;
 class GetSimbolOfFile{
     public int i;
-    public int[] buf = new int[10];
+    public int[] buf = new int[100];
 
     public void getsimbol(String file)  throws IOException{
-
-        FileInputStream fin = new FileInputStream(file);
-        do{
-            i = fin.read();
+        try {
+            FileInputStream fin = new FileInputStream(file);
             int k=0;
-            if (i!=-1){
-                System.out.println((char)i);
-                System.out.println(i);
-                this.buf[k] = i;
-                System.out.println(this.buf[k]);
-            } else {
-                this.buf[k] = 0;
-            }
+            do{
+                i = fin.read();
 
-            k++;
-        }while (i!=-1);
+                if (i!=-1){
+                    this.buf[k] = i;
+                } else {
+                    this.buf[k] = 0;
+                }
+                k++;
+            }while (i!=-1);
 
-        fin.close();
-    }
+                try {
+                    fin.close();
+                } catch (Exception e){
+                    System.out.println("Возникли проблемы с закрытием файла");
+                }
 
-
-    public void setsimbol(String outf)  throws IOException{
-
-        FileOutputStream fout = new FileOutputStream(outf);
-
-        for(int i=0; (i<this.buf.length); i++) {
-            System.out.println(this.buf[i]);
-            fout.write(this.buf[i]);
+        } catch (Exception e){
+            System.out.println("Возникли проблемы с открытием файла");
         }
 
-        fout.close();
     }
 
+    public void setsimbol(String outf)  throws IOException{
+        try{
+            FileOutputStream fout = new FileOutputStream(outf);
+            for(int i=0; (i<this.buf.length); i++) {
+                if(this.buf[i]!=0){
+                    fout.write(this.buf[i]);
+                }
+            }
+            try {
+                fout.close();
+            } catch (Exception e){
+                System.out.println("Возникли проблемы с закрытием файла");
+            }
+        } catch (Exception e){
+            System.out.println("Возникли проблемы с открытием файла");
+        }
+    }
 }
 public class Global {
     public static void main(String[] args) throws FileNotFoundException
     {
         GetSimbolOfFile obj = new GetSimbolOfFile();
-        System.out.println(obj.buf[1]);
 
         try{
             obj.getsimbol("D:\\bcb\\text.txt");
