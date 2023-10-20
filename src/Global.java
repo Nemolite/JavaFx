@@ -56,7 +56,7 @@ public class Global {
         try{
             obj.getsimbol("D:\\bcb\\text.txt");
         } catch (IOException e){
-            System.out.println("Возникли проблемы при работе с файлом");
+            System.out.println("Возникли проблемы при работе с файлом2222");
         }
 
         try{
